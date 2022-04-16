@@ -3,11 +3,13 @@ def main(ctx):
         "kind": "pipeline",
         "name": "scratch",
         "steps": [
-            "name": "print-env",
-            "image": "debian:bullseye",
-            "pull": "always",
-            "commands": [
-                "env | sort",
-            ],
+            {
+                "name": "print-env",
+                "image": "debian:bullseye",
+                "pull": "always",
+                "commands": [
+                    "env | sort",
+                ],
+            },
         ],
     }
