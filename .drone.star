@@ -5,7 +5,7 @@ def main(ctx):
         "steps": [
             {
                 "name": "print-env",
-                "image": "debian:bullseye",
+                "image": "debian:bullseye-slim",
                 "pull": "always",
                 "commands": [
                     "env | sort",
