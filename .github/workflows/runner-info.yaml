@@ -41,10 +41,6 @@ jobs:
         run: |
           env | sort
 
-      - name: "Python"
-        run: |
-          python3 --version
-
       - name: "OS"
         run: |
           if [[ -f "/etc/os-release" ]]; then
@@ -55,6 +51,10 @@ jobs:
         run: |
           python3 -u path-printer.py
 
+      - name: "Version Printer"
+        run: |
+          python3 -u version-printer.py
+
       - name: "Packages"
         run: |
           if command -v dpkg; then
@@ -63,36 +63,12 @@ jobs:
 
       - name: "Git"
         run: |
-          git --version
           git branch -a
           git remote -v
-
-      - name: "Git LFS"
-        run: |
-          git lfs --version
-
-      - name: "gh"
-        run: |
-          gh --version
 
       - name: "Git tags"
         run: |
           git tag
-
-      - name: "jq"
-        run: |
-          jq --version
-
-      - name: "Docker"
-        # Docker isn't available on macOS runners at the moment
-        if: "${{ runner.os == 'Linux' }}"
-        run: |
-          docker version
-          docker compose version
-
-      - name: "Perl"
-        run: |
-          perl --version
 
       - name: "Pip Freeze"
         run: |
@@ -107,7 +83,7 @@ jobs:
 
       - name: "Powershell"
         run: |
-          pwsh --version
+          echo $PSVersionTable
 
       - name: "Accounting"
         run: |
@@ -117,7 +93,6 @@ jobs:
         run: |
           systeminfo
 
-
       - name: "Env"
         run: |
           env | sort
@@ -126,48 +101,26 @@ jobs:
         run: |
           pwsh --command 'Get-ChildItem Env: | Format-Table -Wrap -AutoSize'
 
-      - name: "Python"
+      - name: "Path Printer"
         run: |
-          python3 --version
+          python3 -u path-printer.py
+
+      - name: "Version Printer"
+        run: |
+          python3 -u version-printer.py
 
       - name: "Packages"
         run: |
           winget list --accept-source-agreements
 
-      - name: "Path Printer"
-        run: |
-          python3 -u path-printer.py
-
       - name: "Git"
         run: |
-          git --version
           git branch -a
           git remote -v
-
-      - name: "Git LFS"
-        run: |
-          git lfs --version
-
-      - name: "gh"
-        run: |
-          gh --version
 
       - name: "Git tags"
         run: |
           git tag
-
-      - name: "jq"
-        run: |
-          jq --version
-
-      - name: "Docker"
-        run: |
-          docker version
-          docker compose version
-
-      - name: "Perl"
-        run: |
-          perl --version
 
       - name: "Pip Freeze"
         run: |
