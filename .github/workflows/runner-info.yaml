@@ -41,28 +41,6 @@ jobs:
         run: |
           env | sort
 
-      - name: "/etc"
-        run: |
-          ls -la /etc
-
-      - name: "/bin"
-        run: |
-          ls -la /bin
-
-      - name: "/usr/bin"
-        run: |
-          ls -la /usr/bin
-
-      - name: "/usr/local/bin"
-        run: |
-          ls -la /usr/local/bin
-
-      - name: "/opt/homebrew/bin"
-        run: |
-          if [[ -d "/opt/homebrew/bin" ]]; then
-            ls -la /opt/homebrew/bin
-          fi
-
       - name: "Python"
         run: |
           python3 --version
@@ -72,6 +50,10 @@ jobs:
           if [[ -f "/etc/os-release" ]]; then
             cat /etc/os-release
           fi
+
+      - name: "Path Printer"
+        run: |
+          python3 path-printer.py
 
       - name: "Packages"
         run: |
@@ -152,7 +134,11 @@ jobs:
 
       - name: "Packages"
         run: |
-          winget list
+          winget list --accept-source-agreements
+
+      - name: "Path Printer"
+        run: |
+          python3 path-printer.py
 
       - name: "Git"
         run: |
