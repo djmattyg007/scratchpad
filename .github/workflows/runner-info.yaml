@@ -33,6 +33,9 @@ jobs:
           uname -m
           uname -s
           uname -a
+          if command -v nproc; then
+            nproc
+          fi
 
       - name: "Env"
         run: |
@@ -99,6 +102,8 @@ jobs:
           jq --version
 
       - name: "Docker"
+        # Docker is only available on Linux runners at the moment
+        if: "${{ runner.os == 'Linux' }}"
         run: |
           docker --version
           docker compose --version
@@ -147,9 +152,7 @@ jobs:
 
       - name: "Packages"
         run: |
-          if command -v winget; then
-            winget list
-          fi
+          winget list
 
       - name: "Git"
         run: |
