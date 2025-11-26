@@ -1,0 +1,189 @@
+---
+name: "Runner Info"
+
+on:
+  workflow_dispatch: ~
+
+jobs:
+  runner-info-unix:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - "ubuntu-latest"
+          - "macos-latest"
+
+    runs-on: "${{ matrix.os }}"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8" # v5.0.0
+
+      - name: "Bash"
+        run: |
+          echo "${BASH_VERSION}"
+
+      - name: "Accounting"
+        run: |
+          whoami
+          id
+
+      - name: "CPU"
+        run: |
+          uname -m
+          uname -s
+          uname -a
+
+      - name: "Env"
+        run: |
+          env | sort
+
+      - name: "/etc"
+        run: |
+          ls -la /etc
+
+      - name: "/bin"
+        run: |
+          ls -la /bin
+
+      - name: "/usr/bin"
+        run: |
+          ls -la /usr/bin
+
+      - name: "/usr/local/bin"
+        run: |
+          ls -la /usr/local/bin
+
+      - name: "/opt/homebrew/bin"
+        run: |
+          if [[ -d "/opt/homebrew/bin" ]]; then
+            ls -la /opt/homebrew/bin
+          fi
+
+      - name: "Python"
+        run: |
+          python3 --version
+
+      - name: "OS"
+        run: |
+          if [[ -f "/etc/os-release" ]]; then
+            cat /etc/os-release
+          fi
+
+      - name: "Packages"
+        run: |
+          if command -v dpkg; then
+            dpkg -l | cat
+          fi
+
+      - name: "Git"
+        run: |
+          git --version
+          git branch -a
+          git remote -v
+
+      - name: "Git LFS"
+        run: |
+          git lfs --version
+
+      - name: "gh"
+        run: |
+          gh --version
+
+      - name: "Git tags"
+        run: |
+          git tag
+
+      - name: "jq"
+        run: |
+          jq --version
+
+      - name: "Docker"
+        run: |
+          docker --version
+          docker compose --version
+
+      - name: "Perl"
+        run: |
+          perl --version
+
+      - name: "Pip Freeze"
+        run: |
+          if command -v pip; then
+            pip freeze
+          fi
+
+  runner-info-windows:
+    runs-on: "windows-latest"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8" # v5.0.0
+
+      - name: "Powershell"
+        run: |
+          pwsh --version
+
+      - name: "Accounting"
+        run: |
+          whoami
+
+      - name: "System Info"
+        run: |
+          systeminfo
+
+
+      - name: "Env"
+        run: |
+          env | sort
+
+      - name: "Pwsh Env"
+        run: |
+          pwsh --command 'Get-ChildItem Env: | Format-Table -Wrap -AutoSize'
+
+      - name: "Python"
+        run: |
+          python3 --version
+
+      - name: "Packages"
+        run: |
+          if command -v winget; then
+            winget list
+          fi
+
+      - name: "Git"
+        run: |
+          git --version
+          git branch -a
+          git remote -v
+
+      - name: "Git LFS"
+        run: |
+          git lfs --version
+
+      - name: "gh"
+        run: |
+          gh --version
+
+      - name: "Git tags"
+        run: |
+          git tag
+
+      - name: "jq"
+        run: |
+          jq --version
+
+      - name: "Docker"
+        run: |
+          docker --version
+          docker compose --version
+
+      - name: "Perl"
+        run: |
+          perl --version
+
+      - name: "Pip Freeze"
+        run: |
+          if command -v pip; then
+            pip freeze
+          fi
