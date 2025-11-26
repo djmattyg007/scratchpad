@@ -1,5 +1,6 @@
 import shlex
 import subprocess
+from itertools import chain, zip_longest
 
 version_flag_cmds = (
     "bash",
@@ -24,16 +25,12 @@ version_sub_cmds = (
     "docker compose",
 )
 
-for cmd in version_flag_cmds:
+for cmd, verflag in chain(
+    zip_longest(version_flag_cmds, (), fillvalue="--version"),
+    zip_longest(version_sub_cmds, (), fillvalue="version"),
+):
     print(">", cmd)
     try:
-        subprocess.run((*shlex.split(cmd), "--version"))
-    except FileNotFoundError:
-        print("not found")
-
-for cmd in version_sub_cmds:
-    print(">", cmd)
-    try:
-        subprocess.run((*shlex.split(cmd), "version"))
+        subprocess.run((*shlex.split(cmd), verflag))
     except FileNotFoundError:
         print("not found")
