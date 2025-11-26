@@ -5,6 +5,8 @@ version_flag_cmds = (
     "bash",
     "pwsh",
     "python3",
+    "pip",
+    "pipx",
     "perl",
     "cargo",
     "node",
