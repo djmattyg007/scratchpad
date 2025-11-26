@@ -84,11 +84,11 @@ jobs:
           jq --version
 
       - name: "Docker"
-        # Docker is only available on Linux runners at the moment
+        # Docker isn't available on macOS runners at the moment
         if: "${{ runner.os == 'Linux' }}"
         run: |
-          docker --version
-          docker compose --version
+          docker version
+          docker compose version
 
       - name: "Perl"
         run: |
@@ -96,9 +96,7 @@ jobs:
 
       - name: "Pip Freeze"
         run: |
-          if command -v pip; then
-            pip freeze
-          fi
+          pip freeze
 
   runner-info-windows:
     runs-on: "windows-latest"
@@ -164,8 +162,8 @@ jobs:
 
       - name: "Docker"
         run: |
-          docker --version
-          docker compose --version
+          docker version
+          docker compose version
 
       - name: "Perl"
         run: |
@@ -173,6 +171,4 @@ jobs:
 
       - name: "Pip Freeze"
         run: |
-          if command -v pip; then
-            pip freeze
-          fi
+          pip freeze
